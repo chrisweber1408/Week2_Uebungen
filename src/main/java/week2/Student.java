@@ -1,3 +1,5 @@
+package week2;
+
 public class Student {
 
         private String name = "Name";
