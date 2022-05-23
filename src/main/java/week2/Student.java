@@ -1,38 +1,41 @@
 package week2;
 
-public class Student {
-        private String name = "Name";
-        private int age = 0;
-        private String gender = "Geschlecht";
-        private int id = 0;
+/*
+Erstelle eine Klasse StudentDB mit folgenden Eigenschaften
+Der Konstruktor nimmt ein Array von Studenten entgegen
+Jeder Student hat einen Namen und eine Id
+Die Methode list gibt alle Studenten zurück
+Die Methode toString() gibt alle Studenten formatiert als String zurück
+Die Methode randomStudent() gibt einen zufälligen Studenten zurück (Nutze für den Zufall Math.random())
+Schreibe für alle Methoden Tests (bis auf randomStudent() )
+Bonus:
+Schreibe eine add und eine remove Methode, um Studenten hinzuzufügen und zu entfernen
+Schaue dir records an und mach aus deinem Studenten ein record
+* */
 
-    public Student(String name, int age, String gender, int id) {
+import java.util.UUID;
+
+public class Student {
+
+    private String name;
+    private String id;
+
+    public Student(String name) {
         this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.id = id;
+        id = UUID.randomUUID().toString();
     }
 
-        public String getName(){
-            return name;
-        }
+    public String getId() {
+        return id;
+    }
 
-        public int getAge(){
-            return age;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public String getGender(){
-            return gender;
-        }
-
-        public String toStringg(){
-            return name + " " + age + " " + gender;
-        }
-
-    public String list(){
-        return name + " " + age + " " + gender + " " + id + "\n";
+    @Override
+    public String toString() {
+        return "ID:" + id +
+                " Name: " + name + " " ;
     }
 }
-
-
-
