@@ -7,11 +7,10 @@ import week2.Student;
 public class StudentTest {
 
     @Test
-    void ShouldBeTrueSetName() {
+    void ShouldBeTrueGetName() {
         //Given
-        Student student1 = new Student();
+        Student student1 = new Student("Christoph Weber", 30, "Männlich");
         //When
-        student1.setName("Christoph Weber");
         String student1Name = student1.getName();
         //Then
         Assertions.assertEquals("Christoph Weber", student1Name);
@@ -19,19 +18,22 @@ public class StudentTest {
 
     @Test
     void ShouldBeTrueSetAge(){
-        Student student1 = new Student();
-        student1.setAge(30);
-        int studentAge = student1.getAge();
-        Assertions.assertEquals(30,studentAge);
+        //Given
+        Student student1 = new Student("Christoph Weber", 30, "Männlich");
+        //When
+        int student1Age = student1.getAge();
+        //Then
+        Assertions.assertEquals(30, student1Age);
     }
 
     @Test
     void ShouldBeTrueSetGender(){
-        Student student1 = new Student();
-        student1.setGender("Männlich");
-        String studentGender = student1.getGender();
-        Assertions.assertEquals("Männlich", studentGender);
-
+        //Given
+        Student student1 = new Student("Christoph Weber", 30, "Männlich");
+        //When
+        String student1Gender = student1.getGender();
+        //Then
+        Assertions.assertEquals("Männlich", student1Gender);
     }
 
 }
