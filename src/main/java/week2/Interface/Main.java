@@ -1,6 +1,4 @@
-package week2;
-import week2.Student;
-import week2.StudentDB;
+package week2.Interface;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package week2;
+package week2.Interface;
 
 /*
 Erstelle eine Klasse StudentDB mit folgenden Eigenschaften

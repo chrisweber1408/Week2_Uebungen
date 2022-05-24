@@ -1,7 +1,6 @@
-package week2;
+package week2.Interface;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class StudentDB {
 
