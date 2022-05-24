@@ -9,8 +9,8 @@ public class StudentDBTest {
     @Test
     void shouldReturnAllStudentsWithList(){
         //GIVEN
-        Student student1 = new Student("Nicolei");
-        Student student2 = new Student("Christoph");
+        Student student1 = new InformatikStudent("Nicolei");
+        Student student2 = new GeschichtsStudent("Christoph");
         Student[] myTestStudents ={student1, student2};
         StudentDB testDb = new StudentDB(myTestStudents);
         //WHEN
@@ -21,8 +21,8 @@ public class StudentDBTest {
     @Test
     void shouldReturnString(){
         //GIVEN
-        Student student1 = new Student("Nicolai");
-        Student student2 = new Student("Christoph");
+        Student student1 = new GeschichtsStudent("Nicolai");
+        Student student2 = new InformatikStudent("Christoph");
         String stu1id = student1.getId();
         String stu2id = student2.getId();
         Student[] myTestStudents ={student1,student2};
@@ -38,9 +38,9 @@ public class StudentDBTest {
     @Test
     void shouldAddNewStudentToDB(){
         //GIVEN
-        Student student1 = new Student("Nicolai");
-        Student student2 = new Student("Christoph");
-        Student student3 = new Student("Erik");
+        Student student1 = new InformatikStudent("Nicolai");
+        Student student2 = new GeschichtsStudent("Christoph");
+        Student student3 = new InformatikStudent("Erik");
         Student[] myTestStudents ={student1,student2};
         StudentDB testDb = new StudentDB(myTestStudents);
         //WHEN
@@ -55,9 +55,9 @@ public class StudentDBTest {
     @Test
     void shouldRemoveStudentFromDB(){
         //GIVEN
-        Student student1 = new Student("Nicolai");
-        Student student2 = new Student("Christoph");
-        Student student3 = new Student("Erik");
+        Student student1 = new GeschichtsStudent("Nicolai");
+        Student student2 = new InformatikStudent("Christoph");
+        Student student3 = new GeschichtsStudent("Erik");
         String removeId = student2.getId();
         Student[] myTestStudents ={student1,student2,student3};
         StudentDB testDb = new StudentDB(myTestStudents);
@@ -68,6 +68,17 @@ public class StudentDBTest {
         assertEquals(2,actual.length);
         assertNotEquals("Christoph", actual[0].getName());
         assertNotEquals("Christoph", actual[1].getName());
+
+    }
+
+    @Test
+    void shouldTestTheCourses(){
+        //GIVEN
+        Student student1 = new InformatikStudent("Nicolei");
+        Student student2 = new GeschichtsStudent("Christoph");
+        Student student3 = new InformatikStudent("Jan");
+        Student student4 = new GeschichtsStudent("Dennis");
+        Student[] myTestStudents = {student1, student2, student3, student4};
 
     }
 }

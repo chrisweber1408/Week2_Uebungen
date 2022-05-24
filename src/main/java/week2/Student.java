@@ -15,27 +15,16 @@ Schaue dir records an und mach aus deinem Studenten ein record
 
 import java.util.UUID;
 
-public class Student {
+public interface Student {
 
-    private String name;
-    private String id;
+    public String getId();
 
-    public Student(String name) {
-        this.name = name;
-        id = UUID.randomUUID().toString();
-    }
 
-    public String getId() {
-        return id;
-    }
+    public String getName();
 
-    public String getName() {
-        return name;
-    }
+    public String getCourse();
+
 
     @Override
-    public String toString() {
-        return "ID:" + id +
-                " Name: " + name + " " ;
-    }
+    public String toString();
 }
