@@ -1,84 +1,127 @@
 package week2.Interface;
 
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class StudentDBTest {
-    @Test
-    void shouldReturnAllStudentsWithList(){
-        //GIVEN
-        Student student1 = new InformatikStudent("Nicolei");
-        Student student2 = new GeschichtsStudent("Christoph");
-        Student[] myTestStudents ={student1, student2};
-        StudentDB testDb = new StudentDB(myTestStudents);
-        //WHEN
-        Student[] actual = testDb.list();
-        //THEN
-        assertArrayEquals(myTestStudents,actual);
-    }
-    @Test
-    void shouldReturnString(){
-        //GIVEN
-        Student student1 = new GeschichtsStudent("Nicolai");
-        Student student2 = new InformatikStudent("Christoph");
-        String stu1id = student1.getId();
-        String stu2id = student2.getId();
-        Student[] myTestStudents ={student1,student2};
-        StudentDB testDb = new StudentDB(myTestStudents);
-        String expected = "Unsere Schüler: [ID:"+stu1id+" Name: Nicolai , ID:"+stu2id+" Name: Christoph ]";
-        //WHEN
-        String actual = testDb.toString();
-        //THEN
-        assertEquals(expected,actual);
-    }
-
+class StudentDBTest {
 
     @Test
-    void shouldAddNewStudentToDB(){
-        //GIVEN
-        Student student1 = new InformatikStudent("Nicolai");
-        Student student2 = new GeschichtsStudent("Christoph");
-        Student student3 = new InformatikStudent("Erik");
-        Student[] myTestStudents ={student1,student2};
-        StudentDB testDb = new StudentDB(myTestStudents);
-        //WHEN
-        testDb.add(student3);
-        Student[] actual = testDb.list();
-        //THEN
-        assertEquals(3,actual.length);
-        Student newStudent = actual[2];
-        assertEquals("Erik",newStudent.getName());
+    void shouldMakeSureThatStudentsCanBeRetrieved() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        Student[] actual = studentDB.list();
+
+        // then
+        Assertions.assertArrayEquals(students, actual);
     }
 
     @Test
-    void shouldRemoveStudentFromDB(){
-        //GIVEN
-        Student student1 = new GeschichtsStudent("Nicolai");
-        Student student2 = new InformatikStudent("Christoph");
-        Student student3 = new GeschichtsStudent("Erik");
-        String removeId = student2.getId();
-        Student[] myTestStudents ={student1,student2,student3};
-        StudentDB testDb = new StudentDB(myTestStudents);
-        //WHEN
-        testDb.remove(removeId);
-        Student[] actual = testDb.list();
-        //THEN
-        assertEquals(2,actual.length);
-        assertNotEquals("Christoph", actual[0].getName());
-        assertNotEquals("Christoph", actual[1].getName());
+    void shouldReturnRandomStudent() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
 
+        // when
+        Student student = studentDB.randomStudent();
+
+        // then
+        Assertions.assertNotNull(student);
     }
 
     @Test
-    void shouldTestTheCourses(){
-        //GIVEN
-        Student student1 = new InformatikStudent("Nicolei");
-        Student student2 = new GeschichtsStudent("Christoph");
-        Student student3 = new InformatikStudent("Jan");
-        Student student4 = new GeschichtsStudent("Dennis");
-        Student[] myTestStudents = {student1, student2, student3, student4};
+    void shouldReturnStringRepresentation() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
 
+        // when
+        String actual = studentDB.toString();
+
+        // then
+        assertEquals("[{name: André Schreck}, {name: Thomas Kittlaus}]", actual);
     }
+
+    @Test
+    void shouldAddNewStudent() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        Student newStudent = new HistoryStudent("Thomas Kittlaus");
+        studentDB.add(newStudent);
+        Student[] actual = studentDB.list();
+
+        // then
+        Student[] expected = { students[0], newStudent };
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveFirstStudent() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        studentDB.removeByIndex(0);
+        Student[] actual = studentDB.list();
+
+        // then
+        Student[] expected = {students[1]};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveLastStudent() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        studentDB.removeByIndex(1);
+        Student[] actual = studentDB.list();
+
+        // then
+        Student[] expected = {students[0]};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveIntermediateStudent() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Max Mustermann"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        studentDB.removeByIndex(1);
+        Student[] actual = studentDB.list();
+
+        // then
+        Student[] expected = {students[0], students[2]};
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldRemoveIntermediateStudentById() {
+        // given
+        Student[] students = { new ComputerScienceStudent("André Schreck"), new HistoryStudent("Max Mustermann"), new HistoryStudent("Thomas Kittlaus") };
+        StudentDB studentDB = new StudentDB(students);
+
+        // when
+        studentDB.removeById(students[1].getId());
+        Student[] actual = studentDB.list();
+
+        // then
+        Student[] expected = {students[0], students[2]};
+        assertArrayEquals(expected, actual);
+    }
+
 }

@@ -1,61 +1,57 @@
 package week2.Interface;
 
+
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class StudentDB {
 
-    private Student[] allMyStudents;
+    private Student[] students;
 
-    public StudentDB(Student[] allMyStudents) {
-        this.allMyStudents = allMyStudents;
+    public StudentDB(Student[] students) {
+        this.students = students;
     }
 
-    public Student[] list(){
-        return allMyStudents;
+    public Student[] list() {
+        return students;
     }
 
-    public Student random(){
-        int randomIndex = (int) (Math.random()*allMyStudents.length);
-        return allMyStudents[randomIndex];
+    public Student randomStudent() {
+        int index = (int) (Math.random() * students.length);
+        return students[index];
     }
 
     @Override
     public String toString() {
-        return "Unsere Schüler: " + Arrays.toString(allMyStudents);
+        return "[" + Arrays.stream(students).map(Object::toString).collect(Collectors.joining(", ")) + "]";
     }
 
-    public void add(Student studentToAdd) {
-        Student[] studArr = new Student[allMyStudents.length+1];
-        for (int i = 0; i < allMyStudents.length; i++) {
-            studArr[i] = allMyStudents[i];
-        }
-        studArr[allMyStudents.length] = studentToAdd;
-        allMyStudents = studArr;
+    public void add(Student newStudent) {
+        Student[] newStudents = Arrays.copyOf(students, students.length + 1);
+        newStudents[newStudents.length - 1] = newStudent;
+        students = newStudents;
     }
 
-
-    public void remove(String removeId) {
-        if (!containsId(removeId)){
-            System.out.println("Kenn ich nicht");
-            return;
-        }
-        Student[] studArr = new Student[allMyStudents.length-1];
-        int counter = 0;
-        for (int i = 0; i < studArr.length; i++) {
-            if (allMyStudents[i].getId().equals(removeId)){
-                counter++;
-            }
-            studArr[i] = allMyStudents[i+counter];
-        }
-        allMyStudents = studArr;
+    public void removeByIndex(int index) {
+        Student[] newStudents = new Student[students.length - 1];
+        System.arraycopy(students, 0, newStudents, 0, index);
+        System.arraycopy(students, index + 1, newStudents, index, students.length - (index + 1));
+        students = newStudents;
     }
 
-    private boolean containsId(String id){
-        for (Student s : allMyStudents) {
-            if (s.getId().equals(id)) {
-                return true;
+    public void removeById(String id) {
+        int index = findIndex(id);
+        if (index >= 0) {
+            removeByIndex(index);
+        }
+    }
+
+    private int findIndex(String id) {
+        for (int i = 0; i < students.length; i++) {
+            if (students[i].getId().equals(id)) {
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 }
