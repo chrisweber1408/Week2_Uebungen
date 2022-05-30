@@ -1,9 +1,10 @@
-package Week3;
+package Week3.Enum;
 
+import Week3.Enum.AlarmEnum;
+import Week3.Enum.AlarmWithAlarmLevel;
 import org.junit.jupiter.api.Test;
-import Week3.AlarmWithAlarmLevel;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AlarmWithAlarmLevelTest {
 
