@@ -19,11 +19,11 @@ public class Student {
     public String getName() {
         return name;
     }
-
     @Override
     public String toString() {
         return "{name: " + name + "}";
     }
+
 
     @Override
     public boolean equals(Object o) {
